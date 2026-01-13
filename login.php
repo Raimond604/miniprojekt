@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $inputUsername = trim($_POST['username']);
     $inputPassword = trim($_POST['password']);
 
-    $stmt = $conn->prepare("SELECT id, password, role FROM users WHERE username = ?");
+    $stmt = $conn->prepare("SELECT id, password,FROM users WHERE username = ?");
     $stmt->bind_param("s", $inputUsername);
     $stmt->execute();
     $stmt->store_result();
@@ -18,7 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (password_verify($inputPassword,$plainPassword)) {
             $_SESSION['user_id'] = $user_id;
             $_SESSION['username'] = $inputUsername;
-            $_SESSION['role'] = $role;
 
             header("Location: index.php");
             exit;
