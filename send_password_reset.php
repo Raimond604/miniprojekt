@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $token = bin2hex(random_bytes(16));
     $token_hash = hash("sha256", $token);
-    $expiry = date("Y-m-d H:i:s", time() + 60 * 0.5);
+    $expiry = date("Y-m-d H:i:s", time() + 60 * 5);
 
     
     $update = "UPDATE users 

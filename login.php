@@ -6,13 +6,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $inputUsername = trim($_POST['username']);
     $inputPassword = trim($_POST['password']);
 
-    $stmt = $conn->prepare("SELECT id, password,FROM users WHERE username = ?");
+    $stmt = $conn->prepare("SELECT id, password FROM users WHERE username = ?");
     $stmt->bind_param("s", $inputUsername);
     $stmt->execute();
     $stmt->store_result();
 
     if ($stmt->num_rows > 0) {
-        $stmt->bind_result($user_id, $plainPassword, $role);
+        $stmt->bind_result($user_id, $plainPassword);
         $stmt->fetch();
 
         if (password_verify($inputPassword,$plainPassword)) {

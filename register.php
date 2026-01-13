@@ -7,6 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
+
 $uppercase = preg_match('@[A-Z]@', $password);
 $lowercase = preg_match('@[a-z]@', $password);
 $numbers = preg_match('@[0-9]@', $password);
@@ -30,12 +31,13 @@ elseif(strlen($password) < 8) {
         $passwordHash = password_hash($password, PASSWORD_BCRYPT);
 
         $stmt = $conn->prepare("INSERT INTO users (email, username, password) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss",$$email, $username, $passwordHash);
+        $stmt->bind_param("sss",$email,$username, $passwordHash);
         $stmt->execute();
         $stmt->close();
 
         $_SESSION['user_id'] = $conn->insert_id;
         $_SESSION['username'] = $username;
+
 
         header("Location: index.php");
         exit;
@@ -48,7 +50,8 @@ elseif(strlen($password) < 8) {
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="frontend/register.css">
+    <title>Rejestracja</title>
+<link rel="stylesheet" href="frontend/register.css">
 </head>
 <body>
 
@@ -56,6 +59,8 @@ elseif(strlen($password) < 8) {
 
 <div class="form-box">
     <form method="post">
+        <input type ="text" name ="first_name" placeholder = "Imię" required><br>
+        <input type ="text" name = "last_name" placeholder = "Nazwisko" required> <br>
         <input type ="email" name ="email" placeholder = "E-mail" required> <br>
         <input type="text" name="username" placeholder="Username" required><br>
         <input type="password" name="password" placeholder="Hasło" required><br>
