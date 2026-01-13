@@ -6,8 +6,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
     $email = $_POST['email'];
-    $phone = $_POST['phone'];
-    $address = $_POST['address'];
     $username = $_POST['username'];
     $password = $_POST['password'];
     $role = "customer";
@@ -35,8 +33,8 @@ elseif(strlen($password) < 8) {
         // Hashowanie hasła
         $passwordHash = password_hash($password, PASSWORD_BCRYPT);
 
-        $stmt = $conn->prepare("INSERT INTO users (first_name, last_name, email, phone, address, username, password, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssssss",$first_name,$last_name,$email,$phone,$address, $username, $passwordHash, $role);
+        $stmt = $conn->prepare("INSERT INTO users (first_name, last_name, email, username, password, role) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssssss",$first_name,$last_name,$email, $username, $passwordHash, $role);
         $stmt->execute();
         $stmt->close();
 
@@ -67,8 +65,6 @@ elseif(strlen($password) < 8) {
         <input type ="text" name ="first_name" placeholder = "Imię" required><br>
         <input type ="text" name = "last_name" placeholder = "Nazwisko" required> <br>
         <input type ="email" name ="email" placeholder = "E-mail" required> <br>
-        <input type = "text" name= "phone" placeholder = "Numer telefonu" required> <br>
-        <input type = "text" name = "address" placeholder = "Adres" required> <br> 
         <input type="text" name="username" placeholder="Username" required><br>
         <input type="password" name="password" placeholder="Hasło" required><br>
         
