@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $mail->Subject = "Reset hasla";
         $mail->isHTML(true);
 
-        $reset_link = "http://localhost/music_store/reset_password.php?token=$token";
+        $reset_link = "http://localhost/miniprojekt/reset_password.php?token=$token";
 
         $mail->Body = <<<END
             <p><a href="$reset_link">$reset_link</a></p>
