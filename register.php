@@ -3,13 +3,9 @@ session_start();
 include 'config.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
     $email = $_POST['email'];
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $role = "customer";
-
 
 $uppercase = preg_match('@[A-Z]@', $password);
 $lowercase = preg_match('@[a-z]@', $password);
@@ -33,14 +29,13 @@ elseif(strlen($password) < 8) {
         // Hashowanie hasła
         $passwordHash = password_hash($password, PASSWORD_BCRYPT);
 
-        $stmt = $conn->prepare("INSERT INTO users (first_name, last_name, email, username, password, role) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssssss",$first_name,$last_name,$email, $username, $passwordHash, $role);
+        $stmt = $conn->prepare("INSERT INTO users (email, username, password) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss",$$email, $username, $passwordHash);
         $stmt->execute();
         $stmt->close();
 
         $_SESSION['user_id'] = $conn->insert_id;
         $_SESSION['username'] = $username;
-        $_SESSION['role'] = $role;
 
         header("Location: index.php");
         exit;
@@ -61,8 +56,6 @@ elseif(strlen($password) < 8) {
 
 <div class="form-box">
     <form method="post">
-        <input type ="text" name ="first_name" placeholder = "Imię" required><br>
-        <input type ="text" name = "last_name" placeholder = "Nazwisko" required> <br>
         <input type ="email" name ="email" placeholder = "E-mail" required> <br>
         <input type="text" name="username" placeholder="Username" required><br>
         <input type="password" name="password" placeholder="Hasło" required><br>
