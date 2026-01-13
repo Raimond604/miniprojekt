@@ -53,8 +53,7 @@ elseif(strlen($password) < 8) {
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Rejestracja</title>
-    <link rel="stylesheet" href="register.css">
+    <link rel="stylesheet" href="frontend/register.css">
 </head>
 <body>
 
